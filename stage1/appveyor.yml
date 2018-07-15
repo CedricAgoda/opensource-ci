@@ -1,0 +1,16 @@
+version: 1.0.{build}
+skip_tags: true
+environment:
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+build_script:
+- ps: >-
+    cd stage1
+    .\runBuild.ps1
+deploy: off
