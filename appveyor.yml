@@ -12,8 +12,8 @@ dotnet_csproj:
   informational_version: '{version}'
 before_build:
 - ps: >-
-    cd stage1
-    dotnet restore
+    - cd stage1
+    - dotnet restore
 build:
   project: stage1\stage1.csproj
   publish_aspnet_core: true
