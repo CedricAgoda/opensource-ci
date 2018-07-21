@@ -23,9 +23,11 @@ before_build:
 
     yarn webpack
 
+    cd ..
+
     dotnet restore
 build:
-  project: stage2\stage2.csproj
+  project: stage2\stage2.sln
   publish_aspnet_core: true
   verbosity: minimal
 notifications:
