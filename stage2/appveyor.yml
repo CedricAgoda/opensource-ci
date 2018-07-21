@@ -17,6 +17,12 @@ before_build:
 - ps: >-
     cd stage2
 
+    yarn install
+
+    yarn webpack --config webpack.config.vendor.js
+
+    yarn webpack
+
     dotnet restore
 build:
   project: stage2\stage2.csproj
