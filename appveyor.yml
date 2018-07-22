@@ -26,6 +26,8 @@ before_build:
     cd ..
 
     dotnet restore
+
+    cd ..
 build:
   project: stage3\opensourceci.sln
   publish_aspnet_core: true
