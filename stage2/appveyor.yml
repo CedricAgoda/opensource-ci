@@ -27,7 +27,7 @@ before_build:
 
     dotnet restore
 build:
-  project: stage2\stage2.sln
+  project: stage2\opensourceci.sln
   publish_aspnet_core: true
   verbosity: minimal
 notifications:
