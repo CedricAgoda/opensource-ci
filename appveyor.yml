@@ -44,7 +44,7 @@ build:
   verbosity: minimal
 test_script:
 - ps: >-
-    & $env:USERPROFILE\.nuget\packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -oldStyle -target:"dotnet.exe" -targetargs:"test stage3\tests\tests.csproj" -filter:"+[opensourceci*]* +[tests*]*" -output:"coverage.xml"
+    & $env:USERPROFILE\.nuget\packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -oldStyle -target:"dotnet.exe" -targetargs:"test stage4\tests\tests.csproj" -filter:"+[opensourceci*]* +[tests*]*" -output:"coverage.xml"
 
     choco install --no-progress codecov
     
