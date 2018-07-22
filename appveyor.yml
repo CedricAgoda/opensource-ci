@@ -22,15 +22,15 @@ before_build:
 - ps: >-
     cd stage4/src
 
-    # yarn install
+    yarn install
 
-    # yarn webpack --config webpack.config.vendor.js
+    yarn webpack --config webpack.config.vendor.js
 
-    # yarn webpack
+    yarn webpack
 
     cd ..
 
-    # dotnet restore
+    dotnet restore
 
     cd ..
 
@@ -38,11 +38,7 @@ before_build:
 
     7z x "$env:APPVEYOR_BUILD_FOLDER\$env:SonarScannerMsBuild" -o"$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild"
 
-    Write-Host $env:SonarKey
-
-    Write-Host "$env:SonarKey"
-
-    Write-Host dotnet "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll" begin /k:opensource-ci /v:$env:APPVEYOR_BUILD_VERSION /d:sonar.organization=cedricagoda-github /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SonarKey" /d:sonar.exclusions="$env:SonarExclusion"
+    dotnet "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll" begin /k:opensource-ci /v:$env:APPVEYOR_BUILD_VERSION /d:sonar.organization=cedricagoda-github /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SonarKey" /d:sonar.exclusions="$env:SonarExclusions"
 build:
   project: stage4\opensourceci.sln
   publish_aspnet_core: true
@@ -51,7 +47,7 @@ test_script:
 - ps: >-
     & $env:USERPROFILE\.nuget\packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -oldStyle -target:"dotnet.exe" -targetargs:"test stage3\tests\tests.csproj" -filter:"+[opensourceci*]* +[tests*]*" -output:"coverage.xml"
 
-    dotnet $env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll end /d:sonar.login=$env:SonarKey
+    dotnet "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll" end /d:sonar.login="$env:SonarKey"
 
     # choco install codecov
     
