@@ -39,8 +39,6 @@ test_script:
     choco install codecov
     
     codecov -f coverage.xml
-
-    cd ../..
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
