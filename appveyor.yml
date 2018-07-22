@@ -38,6 +38,10 @@ before_build:
 
     7z x "$env:APPVEYOR_BUILD_FOLDER\$env:SonarScannerMsBuild" -o"$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild"
 
+    Write-Host $env:SonarKey
+
+    Write-Host "$env:SonarKey"
+
     Write-Host dotnet "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll" begin /k:opensource-ci /v:$env:APPVEYOR_BUILD_VERSION /d:sonar.organization=cedricagoda-github /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SonarKey" /d:sonar.exclusions="$env:SonarExclusion"
 build:
   project: stage4\opensourceci.sln
