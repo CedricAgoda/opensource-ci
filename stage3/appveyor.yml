@@ -28,6 +28,8 @@ before_build:
     dotnet restore
 
     cd ..
+
+    choco install codecov
 build:
   project: stage3\opensourceci.sln
   publish_aspnet_core: true
@@ -36,7 +38,11 @@ test_script:
 - ps: >-
     cd stage3/tests
 
-    & $env:USERPROFILE\.nuget\packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -oldStyle -target:"dotnet.exe" -targetargs:"test tests.csproj" -filter:"+[opensourceci*]* +[tests*]*" -output:"coverage.xml"
+    & $env:USERPROFILE\.nuget\packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -oldStyle -target:"dotnet.exe" -targetargs:"test --no-build tests.csproj" -filter:"+[opensourceci*]* +[tests*]*" -output:"coverage.xml"
+
+    codecov -f coverage.xml
+
+    cd ../..
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
