@@ -38,9 +38,9 @@ test_script:
 
     & $env:USERPROFILE\.nuget\packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -oldStyle -target:"dotnet.exe" -targetargs:"test tests.csproj" -filter:"+[opensourceci*]* +[tests*]*" -output:"coverage.xml"
 
-    # choco install codecov
+    choco install codecov
     
-    # codecov -f coverage.xml
+    codecov -f coverage.xml
 
     cd ../..
 notifications:
