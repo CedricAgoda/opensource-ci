@@ -1,1 +1,6 @@
 Presentation/~$Full Open-Source CI.pptx
+**/node_modules/
+**/bin/
+**/obj/
+**/wwwroot/dist/
+**/yarn.lock
