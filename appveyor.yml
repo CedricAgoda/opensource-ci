@@ -28,6 +28,10 @@ before_build:
     dotnet restore
 
     cd ..
+
+    Invoke-WebRequest "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/4.3.1.1372/sonar-scanner-msbuild-4.3.1.1372-net46.zip" -OutFile "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild-4.2.0.1214-netcoreapp2.0.zip"
+
+    7z x "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild-4.2.0.1214-netcoreapp2.0.zip" -o"$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild"
 build:
   project: stage3\opensourceci.sln
   publish_aspnet_core: true
@@ -36,9 +40,9 @@ test_script:
 - ps: >-
     & $env:USERPROFILE\.nuget\packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -oldStyle -target:"dotnet.exe" -targetargs:"test stage3\tests\tests.csproj" -filter:"+[opensourceci*]* +[tests*]*" -output:"coverage.xml"
 
-    choco install codecov
+    # choco install codecov
     
-    codecov -f coverage.xml
+    # codecov -f coverage.xml
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
