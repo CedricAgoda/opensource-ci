@@ -4,3 +4,4 @@ Presentation/~$Full Open-Source CI.pptx
 **/obj/
 **/wwwroot/dist/
 **/yarn.lock
+**/coverage.xml

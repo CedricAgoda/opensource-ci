@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stage2", "src\stage2.csproj", "{E9818DA1-1183-4C0B-AA9F-9A97F30BBD00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opensourceci", "src\opensourceci.csproj", "{E9818DA1-1183-4C0B-AA9F-9A97F30BBD00}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{930151EB-093A-43ED-AC89-82757B56DD57}"
 EndProject
