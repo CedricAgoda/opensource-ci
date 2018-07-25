@@ -5,10 +5,11 @@ platform: Any CPU
 skip_branch_with_pr: true
 skip_tags: true
 environment:
-  SonarScannerMsBuild: sonar-scanner-msbuild-4.3.1.1372-netcoreapp2.0.zip
   SonarExclusions: coverage\**\*,**\*.xml,**\*.js,tscoverage\**\*,**\jestsetup.ts,**\*.ico,**\Program.cs,**\Startup.cs
   SonarKey:
     secure: pwFVmNEo0UwGFSQApyjms1+OFndkimAVvHLWjvqHHAvIUX1OCIvJcPKJUL1Sq50i
+  SonarGithubKey:
+    secure: fggX8ZEkU6nTXAwvWJLMDtlK+qpFSF1LBlPeICGpeZ+VHlY0/n0taX/uBvhoLcnw
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
@@ -33,11 +34,18 @@ before_build:
 
     cd ..
 
-    Invoke-WebRequest "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/4.3.1.1372/$env:SonarScannerMsBuild" -OutFile "$env:APPVEYOR_BUILD_FOLDER\$env:SonarScannerMsBuild"
+    choco install --no-progress sonarscanner-msbuild-netcoreapp2.0
 
-    7z x "$env:APPVEYOR_BUILD_FOLDER\$env:SonarScannerMsBuild" -o"$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild"
+    if ( $env:APPVEYOR_PULL_REQUEST_NUMBER )
+    {
+      dotnet "C:\ProgramData\chocolatey\lib\sonarscanner-msbuild-netcoreapp2.0\tools\SonarScanner.MSBuild.dll" begin /k:opensource-ci /v:$env:APPVEYOR_BUILD_VERSION /d:sonar.organization=cedricagoda-github /d:sonar.host.url=https://sonarcloud.io /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.login=$env:SonarKey /d:sonar.exclusions="$env:SonarExclusions" /d:sonar.analysis.mode=preview /d:sonar.github.pullRequest=$env:APPVEYOR_PULL_REQUEST_NUMBER /d:sonar.github.repository=$env:APPVEYOR_REPO_NAME /d:sonar.github.oauth=$env:SonarGithubKey
+    }
+    else
+    {
+      dotnet "C:\ProgramData\chocolatey\lib\sonarscanner-msbuild-netcoreapp2.0\tools\SonarScanner.MSBuild.dll" begin /k:opensource-ci /v:$env:APPVEYOR_BUILD_VERSION /d:sonar.organization=cedricagoda-github /d:sonar.host.url=https://sonarcloud.io /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.login=$env:SonarKey /d:sonar.exclusions="$env:SonarExclusions"
+    }
 
-    dotnet "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll" begin /k:opensource-ci /v:$env:APPVEYOR_BUILD_VERSION /d:sonar.organization=cedricagoda-github /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SonarKey" /d:sonar.exclusions="$env:SonarExclusions"
+    
 build:
   project: stage4\opensourceci.sln
   publish_aspnet_core: true
@@ -50,7 +58,7 @@ test_script:
     
     codecov -f coverage.xml
 
-    dotnet "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll" end /d:sonar.login="$env:SonarKey"
+    dotnet "C:\ProgramData\chocolatey\lib\sonarscanner-msbuild-netcoreapp2.0\tools\SonarScanner.MSBuild.dll" end /d:sonar.login="$env:SonarKey"
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true

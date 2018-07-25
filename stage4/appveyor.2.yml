@@ -1,0 +1,58 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+skip_branch_with_pr: true
+skip_tags: true
+environment:
+  SonarScannerMsBuild: sonar-scanner-msbuild-4.3.1.1372-netcoreapp2.0.zip
+  SonarExclusions: coverage\**\*,**\*.xml,**\*.js,tscoverage\**\*,**\jestsetup.ts,**\*.ico,**\Program.cs,**\Startup.cs
+  SonarKey:
+    secure: pwFVmNEo0UwGFSQApyjms1+OFndkimAVvHLWjvqHHAvIUX1OCIvJcPKJUL1Sq50i
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+before_build:
+- ps: >-
+    cd stage4/src
+
+    yarn install
+
+    yarn webpack --config webpack.config.vendor.js
+
+    yarn webpack
+
+    cd ..
+
+    dotnet restore
+
+    cd ..
+
+    Invoke-WebRequest "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/4.3.1.1372/$env:SonarScannerMsBuild" -OutFile "$env:APPVEYOR_BUILD_FOLDER\$env:SonarScannerMsBuild"
+
+    7z x "$env:APPVEYOR_BUILD_FOLDER\$env:SonarScannerMsBuild" -o"$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild"
+
+    dotnet "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll" begin /k:opensource-ci /v:$env:APPVEYOR_BUILD_VERSION /d:sonar.organization=cedricagoda-github /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SonarKey" /d:sonar.exclusions="$env:SonarExclusions"
+build:
+  project: stage4\opensourceci.sln
+  publish_aspnet_core: true
+  verbosity: minimal
+test_script:
+- ps: >-
+    & $env:USERPROFILE\.nuget\packages\opencover\4.6.519\tools\OpenCover.Console.exe -register:user -oldStyle -target:"dotnet.exe" -targetargs:"test stage4\tests\tests.csproj" -filter:"+[opensourceci*]* +[tests*]*" -output:"coverage.xml"
+
+    choco install --no-progress codecov
+    
+    codecov -f coverage.xml
+
+    dotnet "$env:APPVEYOR_BUILD_FOLDER\sonar-scanner-msbuild\SonarScanner.MSBuild.dll" end /d:sonar.login="$env:SonarKey"
+notifications:
+- provider: GitHubPullRequest
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true

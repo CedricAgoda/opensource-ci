@@ -9,7 +9,8 @@ namespace opensourceci.Controllers
 {
     public class HomeController : Controller
     {
-        private INameService nameService = new NameService();
+        private readonly INameService nameService = new NameService();
+
         public IActionResult Index()
         {
             ViewData["Name"] = this.nameService.GetName(null);
