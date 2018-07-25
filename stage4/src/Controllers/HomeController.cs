@@ -10,6 +10,7 @@ namespace opensourceci.Controllers
     public class HomeController : Controller
     {
         private INameService nameService = new NameService();
+        private int unusedProperty = 0;
         public IActionResult Index()
         {
             ViewData["Name"] = this.nameService.GetName(null);
