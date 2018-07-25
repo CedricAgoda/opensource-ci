@@ -5,7 +5,7 @@ platform: Any CPU
 skip_branch_with_pr: true
 skip_tags: true
 environment:
-  SonarExclusions: coverage\**\*,**\*.xml,**\*.js,tscoverage\**\*,**\jestsetup.ts,**\*.ico,**\Program.cs,**\Startup.cs
+  SonarExclusions: coverage\**\*,**\*.xml,**\*.js,tscoverage\**\*,**\jestsetup.ts,**\*.ico,**\Program.cs,**\Startup.cs,**\node_modules\*
   SonarKey:
     secure: pwFVmNEo0UwGFSQApyjms1+OFndkimAVvHLWjvqHHAvIUX1OCIvJcPKJUL1Sq50i
   SonarGithubKey:
