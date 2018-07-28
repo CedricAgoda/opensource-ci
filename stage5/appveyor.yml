@@ -23,7 +23,7 @@ before_build:
     & .\before_build.ps1   
 build:
   project: stage5\opensourceci.sln
-  publish_aspnet_core: true
+  publish_wap_xcopy: true
   verbosity: minimal
 after_build:
 - ps: >-
