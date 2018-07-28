@@ -36,8 +36,8 @@ artifacts:
 deploy:
 - provider: AzureAppServiceZipDeploy
   appservice_environment: false
-  website: techatagoda180728-1
-  username: $techatagoda180728
+  website: techatagoda18072-1
+  username: techatagoda18072
   password:
     secure: t2wUdySB2La3RfdpTZhkCA==
 notifications:
