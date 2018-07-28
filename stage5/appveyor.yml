@@ -30,10 +30,16 @@ after_build:
     & .\after_build.ps1   
 test_script:
 - ps: >-
-    Get-Item .
+    & .\test_script.ps1
 artifacts:
 - path: publish
   type: WebDeployPackage
+deploy:
+- provider: AzureAppServiceZipDeploy
+  website: techatagoda18072-1
+  username: techatagoda18072
+  password:
+    secure: t2wUdySB2La3RfdpTZhkCA==
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
