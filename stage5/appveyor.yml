@@ -30,14 +30,13 @@ after_build:
     & .\after_build.ps1   
 test_script:
 - ps: >-
-    & .\test_script.ps1
+    Get-Item .
 artifacts:
 - path: publish
 deploy:
 - provider: AzureAppServiceZipDeploy
-  appservice_environment: false
-  website: techatagoda18072-1
-  username: techatagoda18072
+  website: techatagoda18072-1.scm
+  username: techatagoda180728-1\techatagoda180728
   password:
     secure: t2wUdySB2La3RfdpTZhkCA==
 notifications:
