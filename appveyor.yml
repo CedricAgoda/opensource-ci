@@ -32,7 +32,7 @@ test_script:
 - ps: >-
     Get-Item .
 artifacts:
-- path: publish
+- path: publishi
 deploy:
   provider: FTP
   protocol: ftps
