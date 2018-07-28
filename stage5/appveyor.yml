@@ -31,8 +31,6 @@ after_build:
 test_script:
 - ps: >-
     & .\test_script.ps1
-before_deploy:
-- ps: dotnet publish --output publish
 artifacts:
 - path: publish
   name: techatagoda180728-1
