@@ -40,6 +40,7 @@ deploy:
   username: techatagoda18072
   password:
     secure: t2wUdySB2La3RfdpTZhkCA==
+  artifact: publish.zip
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
