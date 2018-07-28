@@ -6,10 +6,10 @@ namespace opensourceci
         {
             if (string.IsNullOrWhiteSpace(title))
             {
-                return "John Smith";
+                return "Cedric";
             }
 
-            return $"{title} John Smith";
+            return $"{title} Cedric";
         }
     }
 }
