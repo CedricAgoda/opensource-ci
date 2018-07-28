@@ -1,3 +1,3 @@
 Set-Location stage5\src
-dotnet publish --output ..\..\publishi
+dotnet publish --output ..\..\publish
 Set-Location ..\..

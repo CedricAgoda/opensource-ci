@@ -31,15 +31,8 @@ after_build:
 test_script:
 - ps: >-
     Get-Item .
-deploy:
-  provider: FTP
-  protocol: ftps
-  host: ftps://waws-prod-dm1-101.ftp.azurewebsites.windows.net
-  username: techatagoda180728-1\techatagoda180728
-  password:
-    secure: t2wUdySB2La3RfdpTZhkCA==
-  folder: /site/wwwroot/
-  artifact: publishi/*
+artifacts:
+- path: publish
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
