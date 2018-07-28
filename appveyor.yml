@@ -27,7 +27,7 @@ build:
   verbosity: minimal
 test_script:
 - ps: >-
-    & test_script.ps1
+    & .\test_script.ps1
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
