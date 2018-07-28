@@ -28,12 +28,12 @@ build:
 test_script:
 - ps: >-
     & .\test_script.ps1
+before_deploy:
+- ps: dotnet publish --output publish
 artifacts:
 - path: publish
   name: techatagoda180728-1
   type: WebDeployPackage
-before_deploy:
-- ps: dotnet publish --output publish
 deploy:
 - provider: AzureAppServiceZipDeploy
   website: techatagoda180728-1
