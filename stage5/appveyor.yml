@@ -33,12 +33,11 @@ test_script:
     & .\test_script.ps1
 artifacts:
 - path: publish
-  name: techatagoda180728-1
-  type: WebDeployPackage
 deploy:
 - provider: AzureAppServiceZipDeploy
+  appservice_environment: false
   website: techatagoda180728-1
-  username: techatagoda180728-1\techatagoda180728
+  username: $techatagoda180728
   password:
     secure: t2wUdySB2La3RfdpTZhkCA==
 notifications:
