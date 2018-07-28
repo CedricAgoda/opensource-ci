@@ -33,6 +33,7 @@ test_script:
     Get-Item .
 artifacts:
 - path: publish
+  type: WebDeployPackage
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
