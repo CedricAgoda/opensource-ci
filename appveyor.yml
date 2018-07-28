@@ -25,6 +25,9 @@ build:
   project: stage5\opensourceci.sln
   publish_aspnet_core: true
   verbosity: minimal
+after_build:
+- ps: >-
+    & .\after_build.ps1   
 test_script:
 - ps: >-
     & .\test_script.ps1
