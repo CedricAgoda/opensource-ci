@@ -36,8 +36,8 @@ artifacts:
   type: Zip
 deploy:
 - provider: AzureAppServiceZipDeploy
-  website: techatagoda18072-1
-  username: techatagoda18072-1\techatagoda18072
+  website: techatagoda180728-1
+  username: $techatagoda18072
   password:
     secure: t2wUdySB2La3RfdpTZhkCA==
   artifact: publish.zip
