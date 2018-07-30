@@ -25,20 +25,20 @@ build:
   project: stage5\opensourceci.sln
   publish_wap_xcopy: true
   verbosity: minimal
-after_build:
-- ps: >-
-    & .\after_build.ps1   
 test_script:
 - ps: >-
     & .\test_script.ps1
+after_test:
+- ps: >-
+    & .\after_test.ps1   
 artifacts:
 - path: publish
   type: Zip
 deploy:
 - provider: AzureAppServiceZipDeploy
   appservice_environment: false
-  website: techatagoda180728-1
-  username: techatagoda180728
+  website: techatagoda180731
+  username: techatagoda180731
   password:
     secure: t2wUdySB2La3RfdpTZhkCA==
   artifact: publish.zip
