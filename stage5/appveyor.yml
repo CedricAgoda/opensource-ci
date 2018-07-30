@@ -33,13 +33,15 @@ test_script:
     & .\test_script.ps1
 artifacts:
 - path: publish
-  type: WebDeployPackage
+  type: Zip
 deploy:
 - provider: AzureAppServiceZipDeploy
-  website: techatagoda18072-1
-  username: techatagoda18072
+  appservice_environment: false
+  website: techatagoda180728-1
+  username: techatagoda180728
   password:
     secure: t2wUdySB2La3RfdpTZhkCA==
+  artifact: publish.zip
 notifications:
 - provider: GitHubPullRequest
   on_build_success: true
